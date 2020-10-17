@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color: white;
+}
+
+.login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: chocolate;
+}
+
+.displayNameForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nameWarning {
+  display: none;
+}
+
+.nameWarning.active {
+  display: block;
+}
+.roomWarning {
+  display: none;
+}
+
+.roomWarning.active {
+  display: block;
+}
+.login h1 {
+  margin: 2rem 0rem;
+}
+
+.login button {
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+}
+
+.roomCreation {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: cornflowerblue;
+}
+
+.joinGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinGame button {
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+}
+
+.waitingRoom {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: crimson;
+}
+
+.waitingRoom button {
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+}
+
+.waitingRoom ul {
+  list-style: none;
+}
+
+.waitingRoom li {
+  margin: 1rem 0rem;
+}
+
+.gamePage {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: cornflowerblue;
+}
+
+.gridContainer {
+  display: grid;
+  width: 50vh;
+  height: 50vh;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.box {
+  width: 10vh;
+  height: 10vh;
+  background-color: black;
+  color: white;
+}
+
+.x1y2 {
+  background-color: white;
+}
+
+.x1y4 {
+  background-color: white;
+}
+
+.x2y1 {
+  background-color: white;
+}
+
+.x2y3 {
+  background-color: white;
+}
+
+.x2y5 {
+  background-color: white;
+}
+
+.x3y2 {
+  background-color: white;
+}
+
+.x3y4 {
+  background-color: white;
+}
+
+.x4y1 {
+  background-color: white;
+}
+
+.x4y3 {
+  background-color: white;
+}
+
+.x4y5 {
+  background-color: white;
+}
+
+.x5y2 {
+  background-color: white;
+}
+
+.x5y4 {
+  background-color: white;
+}
+
+.controls {
+  margin: 2rem 0rem;
+}

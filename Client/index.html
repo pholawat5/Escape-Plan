@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escape Plan</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <section class="login">
+      <h1>Welcome To Escape Plan</h1>
+      <form class="displayNameForm">
+        <p class='nameWarning'>This name is not available !</p>
+        <div>
+          <label for="displayName">Enter your display name :</label>
+          <input type="text" name="displayName" class='displayName' required autocomplete="off" />
+        </div>
+        <button type="submit">Proceed!</button>
+      </form>
+      
+    </section>
+    <section class="roomCreation">
+      <form class="joinGame">
+        <p class='roomWarning'>This game has already started / This Channel is full</p>
+        <div>
+          <label for="gameCode"> Enter Game Code :</label>
+          <input type="text" required autocomplete="off" />
+        </div>
+        <button type="submit">Join Game</button>
+      </form>
+    </section>
+    <section class="waitingRoom">
+      <div class="userList">
+        <p>Users in this room</p>
+        <ul class="users"></ul>
+        <button class="playNow">Play Now!</button>
+      </div>
+    </section>
+    <section class="gamePage">
+      <div class="gridContainer">
+        <div class="x1y1 box"></div>
+        <div class="x1y2 box"></div>
+        <div class="x1y3 box"></div>
+        <div class="x1y4 box"></div>
+        <div class="x1y5 box"></div>
+
+        <div class="x2y1 box"></div>
+        <div class="x2y2 box"></div>
+        <div class="x2y3 box"></div>
+        <div class="x2y4 box"></div>
+        <div class="x2y5 box"></div>
+
+        <div class="x3y1 box"></div>
+        <div class="x3y2 box"></div>
+        <div class="x3y3 box"></div>
+        <div class="x3y4 box"></div>
+        <div class="x3y5 box"></div>
+
+        <div class="x4y1 box"></div>
+        <div class="x4y2 box"></div>
+        <div class="x4y3 box"></div>
+        <div class="x4y4 box"></div>
+        <div class="x4y5 box"></div>
+
+        <div class="x5y1 box"></div>
+        <div class="x5y2 box"></div>
+        <div class="x5y3 box"></div>
+        <div class="x5y4 box"></div>
+        <div class="x5y5 box"></div>
+      </div>
+      <h1 class="timer"></h1>
+      <div class="controls">
+        <button class="moveUp">Up</button>
+        <button class="moveDown">Down</button>
+        <button class="moveLeft">Left</button>
+        <button class="moveRight">Right</button>
+      </div>
+    </section>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
