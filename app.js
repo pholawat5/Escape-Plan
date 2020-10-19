@@ -8,7 +8,7 @@ app.use("/", express.static(__dirname + "/client/"));
 app.use("/admin", express.static(__dirname + "/server/"));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "client/index.html");
+  res.sendFile(__dirname + "/Client/index.html");
 });
 
 app.get("/admin", (req, res) => {
