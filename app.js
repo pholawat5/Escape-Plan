@@ -3,9 +3,9 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-app.use("/", express.static(__dirname + "/client/"));
+app.use("/", express.static(__dirname + "/Client/"));
 
-app.use("/admin", express.static(__dirname + "/server/"));
+app.use("/admin", express.static(__dirname + "/Server/"));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/Client/index.html");
