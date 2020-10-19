@@ -298,8 +298,8 @@ io.sockets.on("connection", (socket) => {
   });
 });
 
-var port = normalizePort(process.env.PORT || "8080");
+var port = process.env.PORT || 8080;
 
 server.listen(port, () => {
-  console.log("Server is listening to port 8080");
+  console.log("Server is listening to port " + port);
 });
