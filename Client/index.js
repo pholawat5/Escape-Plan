@@ -37,16 +37,6 @@ class GameClient {
     this.loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
       socket.emit("checkUsername", this.displayNameInput.value);
-      socket.on("checkUsername", (data) => {
-        if (data) {
-          this.displayName = this.displayNameInput.value;
-          this.loginSection.style.display = "none";
-          this.findGameSection.style.display = "flex";
-          this.nameWarning.classList.remove("active");
-        } else {
-          this.nameWarning.classList.add("active");
-        }
-      });
     });
     //FindGame Page
     this.joingameForm.addEventListener("submit", (event) => {
@@ -79,11 +69,23 @@ class GameClient {
 
     socket.on("existingUser", (data) => {
       let users = JSON.parse(data);
+      console.log(users);
       for (var i in users) {
         let otherUser = document.createElement("li");
         otherUser.id = users[i];
         otherUser.innerText = users[i];
         this.userList.appendChild(otherUser);
+      }
+    });
+
+    socket.on("checkUsername", (data) => {
+      if (data) {
+        this.displayName = this.displayNameInput.value;
+        this.loginSection.style.display = "none";
+        this.findGameSection.style.display = "flex";
+        this.nameWarning.classList.remove("active");
+      } else {
+        this.nameWarning.classList.add("active");
       }
     });
 

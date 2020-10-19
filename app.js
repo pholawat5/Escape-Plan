@@ -29,7 +29,7 @@ class GameServer {
     return length;
   }
 
-  checkUsername(userNameInput) {
+  checkUsername(userNameInput, socket) {
     let numCheck = "0123456789";
     let duplicate = false;
     for (var i in this.USER_LIST) {
@@ -41,7 +41,7 @@ class GameServer {
       }
     }
     if (!duplicate) {
-      this.USER_LIST[i].name = userNameInput;
+      this.USER_LIST[socket.id].name = userNameInput;
     }
     return !duplicate;
   }
@@ -84,7 +84,11 @@ io.sockets.on("connection", (socket) => {
   });
 
   socket.on("checkUsername", (data) => {
-    socket.emit("checkUsername", gameServer.checkUsername(data));
+    let ret = gameServer.checkUsername(data, socket);
+    for (var i in gameServer.USER_LIST) {
+      console.log(gameServer.USER_LIST[i].name);
+    }
+    socket.emit("checkUsername", ret);
   });
 
   socket.on("checkRoomStatus", (data) => {
@@ -94,6 +98,7 @@ io.sockets.on("connection", (socket) => {
         socket.join(data);
         let users = [];
         let thisUser = [];
+
         thisUser.push(gameServer.USER_LIST[socket.id].name);
         for (var i in gameServer.ROOM_LIST[data].users) {
           users.push(gameServer.ROOM_LIST[data].users[i].name);
