@@ -10,18 +10,25 @@
     <section class="login">
       <h1>Welcome To Escape Plan</h1>
       <form class="displayNameForm">
-        <p class='nameWarning'>This name is not available !</p>
+        <p class="nameWarning">This name is not available !</p>
         <div>
           <label for="displayName">Enter your display name :</label>
-          <input type="text" name="displayName" class='displayName' required autocomplete="off" />
+          <input
+            type="text"
+            name="displayName"
+            class="displayName"
+            required
+            autocomplete="off"
+          />
         </div>
         <button type="submit">Proceed!</button>
       </form>
-      
     </section>
     <section class="roomCreation">
       <form class="joinGame">
-        <p class='roomWarning'>This game has already started / This Channel is full</p>
+        <p class="roomWarning">
+          This game has already started / This Channel is full
+        </p>
         <div>
           <label for="gameCode"> Enter Game Code :</label>
           <input type="text" required autocomplete="off" />
@@ -68,13 +75,18 @@
         <div class="x5y4 box"></div>
         <div class="x5y5 box"></div>
       </div>
-      <h1 class="timer"></h1>
+
+      <div class="scores">
+        <ul class="userScores"></ul>
+      </div>
+      <h1 class="timer">10</h1>
       <div class="controls">
         <button class="moveUp">Up</button>
         <button class="moveDown">Down</button>
         <button class="moveLeft">Left</button>
         <button class="moveRight">Right</button>
       </div>
+      <button class="nextRound">Next Round!</button>
     </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./index.js"></script>

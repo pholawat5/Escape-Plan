@@ -109,58 +109,49 @@ html {
 .box {
   width: 10vh;
   height: 10vh;
+  margin: 0.1rem;
   background-color: black;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.x1y2 {
-  background-color: white;
+.currentBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 
-.x1y4 {
-  background-color: white;
+.currentBlock #Vector {
+  fill: red;
 }
 
-.x2y1 {
-  background-color: white;
+.otherPlayerBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.x2y3 {
-  background-color: white;
-}
-
-.x2y5 {
-  background-color: white;
-}
-
-.x3y2 {
-  background-color: white;
-}
-
-.x3y4 {
-  background-color: white;
-}
-
-.x4y1 {
-  background-color: white;
-}
-
-.x4y3 {
-  background-color: white;
-}
-
-.x4y5 {
-  background-color: white;
-}
-
-.x5y2 {
-  background-color: white;
-}
-
-.x5y4 {
-  background-color: white;
+.otherPlayerBlock #Vector {
+  fill: blue;
 }
 
 .controls {
   margin: 2rem 0rem;
+  opacity: 0;
+}
+
+.nextRound {
+  opacity: 0;
+}
+
+.scores {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.timer {
+  opacity: 0;
 }

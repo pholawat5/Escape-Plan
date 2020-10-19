@@ -117,17 +117,181 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("startGame", (data) => {
     console.log("Room " + data + " has started the game!");
-    io.to(data).emit("gameStart");
+    io.to(data).emit("cleanGrid");
+    let gameState = {
+      gridPositions: [],
+    };
+
+    //Generate Grid
+    let k = 0;
+    for (let i = 1; i <= 5; i++) {
+      for (let j = 1; j <= 5; j++) {
+        gameState.gridPositions[k] = "x" + i + "y" + j;
+        k++;
+      }
+    }
+
+    //Random Obstacles
+    let ObstaclePos = [];
+    for (let i = 0; i < 5; i++) {
+      let indexRemove = Math.floor(
+        Math.random() * gameState.gridPositions.length
+      );
+      ObstaclePos.push(gameState.gridPositions[indexRemove]);
+      gameState.gridPositions.splice(indexRemove, 1);
+    }
+
+    //Random Tunnel Pos
+    let TunnelPos = [];
+    let indexRemove =
+      Math.floor(Math.random() * (gameState.gridPositions.length + 1)) %
+      gameState.gridPositions.length;
+    TunnelPos.push(gameState.gridPositions[indexRemove]);
+    gameState.gridPositions.splice(indexRemove, 1);
+
+    //Random Player Pos
+    let UserPos = [];
+    let length = 0;
+    for (var i in gameServer.ROOM_LIST[data].users) {
+      length++;
+    }
+    for (let i = 0; i < length; i++) {
+      let indexRemove =
+        Math.floor(Math.random() * (gameState.gridPositions.length + 1)) %
+        gameState.gridPositions.length;
+      UserPos.push(gameState.gridPositions[indexRemove]);
+      gameState.gridPositions.splice(indexRemove, 1);
+    }
+    for (var i in UserPos) {
+      gameState.gridPositions.push(UserPos[i]);
+    }
+    for (var i in TunnelPos) {
+      gameState.gridPositions.push(TunnelPos[i]);
+    }
+
+    //Crafting message
+    let userPosMsg = {};
+    gameState.users = [];
+    for (var i in gameServer.ROOM_LIST[data].users) {
+      gameState.users.push(gameServer.ROOM_LIST[data].users[i].name);
+    }
+    for (var i in gameState.users) {
+      userPosMsg[gameState.users[i]] = UserPos[i];
+    }
+
+    gameState.playerPos = userPosMsg;
+    gameState.obstaclePos = ObstaclePos;
+    gameState.tunnelPos = TunnelPos;
+    if (gameServer.ROOM_LIST[data].gameState != undefined) {
+      gameState.warderIndex = gameServer.ROOM_LIST[data].gameState.warderIndex;
+    } else {
+      gameState.warderIndex = Math.round(Math.random());
+    }
+
+    if (gameState.warderIndex == 0) {
+      gameState.prisonerIndex = 1;
+    } else {
+      gameState.prisonerIndex = 0;
+    }
+    gameState.playerIndex = gameState.warderIndex;
+    gameState.turn = gameState.users[gameState.warderIndex];
+    //
+    if (gameServer.ROOM_LIST[data].gameState != undefined) {
+      gameState.turn =
+        gameState.users[gameServer.ROOM_LIST[data].gameState.winnerIndex];
+      gameState.playerIndex = gameServer.ROOM_LIST[data].gameState.winnerIndex;
+      gameState.score = [
+        gameServer.ROOM_LIST[data].gameState.score[0],
+        gameServer.ROOM_LIST[data].gameState.score[1],
+      ];
+    } else {
+      gameState.score = [0, 0];
+    }
+    //
+    gameServer.ROOM_LIST[data].gameState = gameState;
+    io.to(data).emit("gameStart", gameServer.ROOM_LIST[data].gameState);
+  });
+
+  socket.on("finishTurn", ([roomName, newPos]) => {
+    gameServer.ROOM_LIST[roomName].gameState.playerPos[
+      gameServer.ROOM_LIST[roomName].gameState.users[
+        gameServer.ROOM_LIST[roomName].gameState.playerIndex %
+          gameServer.ROOM_LIST[roomName].gameState.users.length
+      ]
+    ] = newPos;
+
+    gameServer.ROOM_LIST[roomName].gameState.playerIndex += 1;
+    gameServer.ROOM_LIST[roomName].gameState.turn =
+      gameServer.ROOM_LIST[roomName].gameState.users[
+        gameServer.ROOM_LIST[roomName].gameState.playerIndex %
+          gameServer.ROOM_LIST[roomName].gameState.users.length
+      ];
+
+    //check Win
+    let gameOver = false;
+    if (
+      gameServer.ROOM_LIST[roomName].gameState.playerPos[
+        gameServer.ROOM_LIST[roomName].gameState.users[0]
+      ] ==
+      gameServer.ROOM_LIST[roomName].gameState.playerPos[
+        gameServer.ROOM_LIST[roomName].gameState.users[1]
+      ]
+    ) {
+      gameOver = true;
+      gameServer.ROOM_LIST[roomName].gameState.winnerIndex =
+        gameServer.ROOM_LIST[roomName].gameState.warderIndex;
+      gameServer.ROOM_LIST[roomName].gameState.score[
+        gameServer.ROOM_LIST[roomName].gameState.winnerIndex
+      ] += 1;
+    }
+
+    if (
+      gameServer.ROOM_LIST[roomName].gameState.playerPos[
+        gameServer.ROOM_LIST[roomName].gameState.users[
+          gameServer.ROOM_LIST[roomName].gameState.prisonerIndex
+        ]
+      ] == gameServer.ROOM_LIST[roomName].gameState.tunnelPos[0]
+    ) {
+      gameOver = true;
+      gameServer.ROOM_LIST[roomName].gameState.winnerIndex =
+        gameServer.ROOM_LIST[roomName].gameState.prisonerIndex;
+      gameServer.ROOM_LIST[roomName].gameState.score[
+        gameServer.ROOM_LIST[roomName].gameState.winnerIndex
+      ] += 1;
+    }
+
+    if (!gameOver) {
+      io.to(roomName).emit(
+        "gameStart",
+        gameServer.ROOM_LIST[roomName].gameState
+      );
+    } else {
+      io.to(roomName).emit(
+        "gameOver",
+        gameServer.ROOM_LIST[roomName].gameState
+      );
+    }
   });
 
   socket.on("disconnect", () => {
-    let roomBeforeLeave = gameServer.USER_LIST[socket.id].inRoom;
-    socket
-      .to(roomBeforeLeave)
-      .emit("userLeftRoom", gameServer.USER_LIST[socket.id].name);
-    for (var i in gameServer.ROOM_LIST) {
-      let roomI = gameServer.ROOM_LIST[i].users;
-      delete roomI[socket.id];
+    if (gameServer.USER_LIST[socket.id] != null) {
+      let roomBeforeLeave = gameServer.USER_LIST[socket.id].inRoom;
+      socket
+        .to(roomBeforeLeave)
+        .emit("userLeftRoom", gameServer.USER_LIST[socket.id].name);
+      for (var i in gameServer.ROOM_LIST) {
+        let roomI = gameServer.ROOM_LIST[i].users;
+        delete roomI[socket.id];
+        let empty = true;
+        for (var j in roomI) {
+          if (roomI[j] != undefined) {
+            empty = false;
+          }
+        }
+        if (empty) {
+          delete gameServer.ROOM_LIST[i];
+        }
+      }
     }
     delete gameServer.USER_LIST[socket.id];
     socket.to("admin").emit("population", gameServer.userListLength());
