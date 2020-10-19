@@ -96,6 +96,7 @@ class GameClient {
       if (gameData.turn == gameClient.displayName) {
         console.log("Your Turn!");
         gameClient.moveButton.style.opacity = 1;
+        timer.timerHTML.style.opacity = 1;
         timer.start();
       }
 
