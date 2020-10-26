@@ -1,5 +1,27 @@
 const socket = io();
 
+let rocket = gsap.timeline({ repeat: 0, ease: "power2.inOut" });
+rocket.fromTo(
+  "#rocket",
+  5,
+  { x: "-100%", y: "-100%", rotate: -90 },
+  { rotate: -45, x: "500", y: "200" }
+);
+
+let welcomeTl = gsap.timeline();
+welcomeTl.fromTo(
+  ".login h1",
+  3,
+  { opacity: 0, scale: 0.2 },
+  { opacity: 1, scale: 1 }
+);
+welcomeTl.fromTo(
+  ".displayNameForm",
+  3,
+  { opacity: 0, scale: 0.2 },
+  { opacity: 1, scale: 1 }
+);
+
 class GameClient {
   constructor() {
     //Game Client Variables
@@ -45,8 +67,18 @@ class GameClient {
       socket.emit("checkRoomStatus", this.gameCodeInput.value);
       socket.on("checkRoomStatus", (data) => {
         if (data) {
-          this.findGameSection.style.display = "none";
-          this.waitingSection.style.display = "flex";
+          welcomeTl.fromTo(
+            ".roomCreation",
+            1,
+            { opacity: 1, display: "flex" },
+            { opacity: 0, scale: 1, display: "none" }
+          );
+          welcomeTl.fromTo(
+            ".waitingRoom",
+            1,
+            { opacity: 0, display: "flex" },
+            { opacity: 1, scale: 1, display: "flex" }
+          );
           this.roomWarning.classList.remove("active");
           this.inRoom = this.gameCodeInput.value;
           let user = document.createElement("li");
@@ -59,12 +91,17 @@ class GameClient {
     });
 
     this.playBtn.addEventListener("click", (event) => {
-      socket.emit("startGame", this.inRoom);
+      if (this.userList.childElementCount == 1) {
+        window.alert("Go find a friend, Loser!");
+      } else {
+        socket.emit("startGame", this.inRoom);
+      }
     });
 
     this.nextRoundBtn.addEventListener("click", (event) => {
       socket.emit("startGame", this.inRoom);
       this.nextRoundBtn.style.opacity = 0;
+      gameClient.nextRoundBtn.style.pointerEvents = "none";
     });
 
     socket.on("existingUser", (data) => {
@@ -81,8 +118,48 @@ class GameClient {
     socket.on("checkUsername", (data) => {
       if (data) {
         this.displayName = this.displayNameInput.value;
-        this.loginSection.style.display = "none";
-        this.findGameSection.style.display = "flex";
+        rocket.fromTo(
+          "#rocket",
+          5,
+          { rotate: -45, x: "500", y: "200" },
+          { x: "-100%", y: "-300%", rotate: -90 }
+        );
+        welcomeTl.fromTo(
+          ".displayNameForm",
+          3,
+          { opacity: 1, scale: 1 },
+          { opacity: 0, scale: 0.2 }
+        );
+        welcomeTl.fromTo(
+          ".login",
+          1,
+          { opacity: 1, scale: 1 },
+          { opacity: 0, display: "none" }
+        );
+        welcomeTl.fromTo(
+          ".gameInstructions",
+          1,
+          { opacity: 0, display: "none" },
+          { opacity: 1, display: "flex" }
+        );
+        welcomeTl.fromTo(
+          "#rocket2",
+          7,
+          { x: "-400%", y: "100%", display: "flex", rotate: 20 },
+          { x: "400%", y: "100%" }
+        );
+        welcomeTl.fromTo(
+          ".gameInstructions",
+          1,
+          { opacity: 1, scale: 1 },
+          { opacity: 0, display: "none" }
+        );
+        welcomeTl.fromTo(
+          ".roomCreation",
+          1,
+          { opacity: 0, display: "flex" },
+          { opacity: 1, scale: 1 }
+        );
         this.nameWarning.classList.remove("active");
       } else {
         this.nameWarning.classList.add("active");
@@ -92,12 +169,14 @@ class GameClient {
     socket.on("gameStart", (gameData) => {
       console.log(gameData);
       this.nextRoundBtn.style.opacity = 0;
+      gameClient.nextRoundBtn.style.pointerEvents = "none";
       this.waitingSection.style.display = "none";
       this.gameSection.style.display = "flex";
       console.log(gameData);
       if (gameData.turn == gameClient.displayName) {
         console.log("Your Turn!");
         gameClient.moveButton.style.opacity = 1;
+        gameClient.moveButton.style.pointerEvents = "auto";
         timer.timerHTML.style.opacity = 1;
         timer.start();
       }
@@ -168,6 +247,7 @@ class GameClient {
 
     socket.on("gameOver", (gameData) => {
       this.nextRoundBtn.style.opacity = 1;
+      gameClient.nextRoundBtn.style.pointerEvents = "auto";
       this.scoreList.innerHTML = "";
       for (var i in gameClient.gameState.users) {
         let element = document.createElement("p");
@@ -276,6 +356,7 @@ let timer = {
       clearInterval(this.interval);
       this.timerHTML.innerText = "Time's Up";
       gameClient.moveButton.style.opacity = 0;
+      gameClient.moveButton.style.pointerEvents = "none";
       socket.emit("finishTurn", [gameClient.inRoom, gameClient.currentPos]);
     }
   },
@@ -309,6 +390,7 @@ moveUp.addEventListener("click", () => {
   if (possible) {
     timer.stop();
     gameClient.moveButton.style.opacity = 0;
+    gameClient.moveButton.style.pointerEvents = "none";
     socket.emit("finishTurn", [gameClient.inRoom, newPos]);
     gameClient.currentBlock.classList.remove("currentBlock");
     gameClient.currentBlock.innerHTML = "";
@@ -338,6 +420,7 @@ moveDown.addEventListener("click", () => {
   if (possible) {
     timer.stop();
     gameClient.moveButton.style.opacity = 0;
+    gameClient.moveButton.style.pointerEvents = "none";
     socket.emit("finishTurn", [gameClient.inRoom, newPos]);
     gameClient.currentBlock.classList.remove("currentBlock");
     gameClient.currentBlock.innerHTML = "";
@@ -367,6 +450,7 @@ moveLeft.addEventListener("click", () => {
   if (possible) {
     timer.stop();
     gameClient.moveButton.style.opacity = 0;
+    gameClient.moveButton.style.pointerEvents = "none";
     socket.emit("finishTurn", [gameClient.inRoom, newPos]);
     gameClient.currentBlock.classList.remove("currentBlock");
     gameClient.currentBlock.innerHTML = "";
@@ -396,6 +480,7 @@ moveRight.addEventListener("click", () => {
   if (possible) {
     timer.stop();
     gameClient.moveButton.style.opacity = 0;
+    gameClient.moveButton.style.pointerEvents = "none";
     socket.emit("finishTurn", [gameClient.inRoom, newPos]);
     gameClient.currentBlock.classList.remove("currentBlock");
     gameClient.currentBlock.innerHTML = "";

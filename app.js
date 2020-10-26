@@ -15,6 +15,53 @@ app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/Server/admin.html");
 });
 
+async function checkPath(pos1, pos2, availablePath) {
+  let pos_1_Traversal = [];
+  pos_1_Traversal.push(pos1);
+  await checkPathRecur(pos1, pos2, availablePath, pos_1_Traversal);
+  if (pos_1_Traversal.includes(pos2)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+async function checkPathRecur(pos1, pos2, availablePath, pos_1_Traversal) {
+  let rightPos =
+    "x" + parseInt(pos1.charAt(1)) + "y" + (parseInt(pos1.charAt(3)) + 1);
+  let leftPos =
+    "x" + parseInt(pos1.charAt(1)) + "y" + (parseInt(pos1.charAt(3)) - 1);
+  let upPos =
+    "x" + (parseInt(pos1.charAt(1)) - 1) + "y" + parseInt(pos1.charAt(3));
+  let downPos =
+    "x" + (parseInt(pos1.charAt(1)) + 1) + "y" + parseInt(pos1.charAt(3));
+
+  if (availablePath.includes(rightPos)) {
+    if (!pos_1_Traversal.includes(rightPos)) {
+      pos_1_Traversal.push(rightPos);
+      await checkPathRecur(rightPos, pos2, availablePath, pos_1_Traversal);
+    }
+  }
+  if (availablePath.includes(leftPos)) {
+    if (!pos_1_Traversal.includes(leftPos)) {
+      pos_1_Traversal.push(leftPos);
+      await checkPathRecur(leftPos, pos2, availablePath, pos_1_Traversal);
+    }
+  }
+  if (availablePath.includes(upPos)) {
+    if (!pos_1_Traversal.includes(upPos)) {
+      pos_1_Traversal.push(upPos);
+      await checkPathRecur(upPos, pos2, availablePath, pos_1_Traversal);
+    }
+  }
+  if (availablePath.includes(downPos)) {
+    if (!pos_1_Traversal.includes(downPos)) {
+      pos_1_Traversal.push(downPos);
+      await checkPathRecur(downPos, pos2, availablePath, pos_1_Traversal);
+    }
+  }
+}
+
 class GameServer {
   constructor() {
     this.USER_LIST = {};
@@ -120,7 +167,7 @@ io.sockets.on("connection", (socket) => {
     socket.emit("checkRoomStatus", avail);
   });
 
-  socket.on("startGame", (data) => {
+  socket.on("startGame", async (data) => {
     console.log("Room " + data + " has started the game!");
     io.to(data).emit("cleanGrid");
     let gameState = {
@@ -170,6 +217,32 @@ io.sockets.on("connection", (socket) => {
     for (var i in UserPos) {
       gameState.gridPositions.push(UserPos[i]);
     }
+
+    let stuck = await checkPath(
+      UserPos[0],
+      UserPos[1],
+      gameState.gridPositions
+    );
+
+    while (stuck) {
+      UserPos = [];
+      let z = 0;
+      for (var i in gameServer.ROOM_LIST[data].users) {
+        z = z + 1;
+      }
+      for (let i = 0; i < length; i++) {
+        let indexRemove =
+          Math.floor(Math.random() * (gameState.gridPositions.length + 1)) %
+          gameState.gridPositions.length;
+        UserPos.push(gameState.gridPositions[indexRemove]);
+        gameState.gridPositions.splice(indexRemove, 1);
+      }
+      for (var i in UserPos) {
+        gameState.gridPositions.push(UserPos[i]);
+      }
+      stuck = await checkPath(UserPos[0], UserPos[1], gameState.gridPositions);
+    }
+    console.log(stuck);
     for (var i in TunnelPos) {
       gameState.gridPositions.push(TunnelPos[i]);
     }

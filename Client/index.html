@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rationale&display=swap"
+      rel="stylesheet"
+    />
     <title>Escape Plan</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <section class="login">
+      <div id="stars2"></div>
+      <img id="rocket" src="./img/startup 1.svg" alt="" />
       <h1>Welcome To Escape Plan</h1>
       <form class="displayNameForm">
         <p class="nameWarning">This name is not available !</p>
@@ -23,6 +29,21 @@
         </div>
         <button type="submit">Proceed!</button>
       </form>
+    </section>
+    <section class="gameInstructions">
+      <div id="stars2"></div>
+      <img id="rocket2" src="./img/startup 1.svg" alt="" />
+      <h2>Game Instructions</h2>
+      <div class="instructions">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, modi.
+        </p>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, vel
+          quasi veniam quidem sit reprehenderit!
+        </p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </div>
     </section>
     <section class="roomCreation">
       <form class="joinGame">
@@ -81,13 +102,22 @@
       </div>
       <h1 class="timer">10</h1>
       <div class="controls">
-        <button class="moveUp">Up</button>
-        <button class="moveDown">Down</button>
-        <button class="moveLeft">Left</button>
-        <button class="moveRight">Right</button>
+        <img src="./img/up.png" class="moveUp" alt="" />
+        <div class="low">
+          <img src="./img/left.png" class="moveLeft" alt="" />
+          <img src="./img/down.png" class="moveDown" alt="" />
+          <img src="./img/right.png" class="moveRight" alt="" />
+        </div>
       </div>
-      <button class="nextRound">Next Round!</button>
+      <div class="gameOver">
+        <button class="nextRound">Next Round!</button>
+      </div>
     </section>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"
+      integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ=="
+      crossorigin="anonymous"
+    ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./index.js"></script>
   </body>
