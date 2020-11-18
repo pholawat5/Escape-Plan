@@ -7,18 +7,18 @@
       href="https://fonts.googleapis.com/css2?family=Rationale&display=swap"
       rel="stylesheet"
     />
-    <title>Escape Plan</title>
     <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
   </head>
   <body>
     <section class="login">
       <div id="stars2"></div>
-      <img id="rocket" src="./img/startup 1.svg" alt="" />
+      <img src="./img/startup 1.svg" alt="" id="rocket" />
       <h1>Welcome To Escape Plan</h1>
       <form class="displayNameForm">
-        <p class="nameWarning">This name is not available !</p>
+        <p class="nameWarning"></p>
         <div>
-          <label for="displayName">Enter your display name :</label>
+          <label for="displayName"> Enter your display name : </label>
           <input
             type="text"
             name="displayName"
@@ -32,17 +32,27 @@
     </section>
     <section class="gameInstructions">
       <div id="stars2"></div>
-      <img id="rocket2" src="./img/startup 1.svg" alt="" />
+      <img src="./img/startup 1.svg" alt="" id="rocket2" />
       <h2>Game Instructions</h2>
       <div class="instructions">
+        <p>There are 2 characters in the games; Astronaut and Alien</p>
+        <p>The player who become the Alien will start to move first.</p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, modi.
+          All players cannot access the obstacle blocks (UFO) and only the
+          astronaut can access the rocket block.
         </p>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse, vel
-          quasi veniam quidem sit reprehenderit!
+          For each turn, you will have 10 seconds to move to one adjacent
+          blocks.
         </p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <p>
+          If the alien accesses to the same block of the astronaut, the player
+          who plays the alien will win.
+        </p>
+        <p>
+          But if the astronaut accesses the rocket, the player who plays the
+          astronaut will win.
+        </p>
       </div>
     </section>
     <section class="roomCreation">
@@ -52,67 +62,101 @@
         </p>
         <div>
           <label for="gameCode"> Enter Game Code :</label>
-          <input type="text" required autocomplete="off" />
+          <input type="text" />
         </div>
         <button type="submit">Join Game</button>
       </form>
+      <button class="random">Random Room</button>
     </section>
     <section class="waitingRoom">
       <div class="userList">
         <p>Users in this room</p>
         <ul class="users"></ul>
-        <button class="playNow">Play Now!</button>
       </div>
+      <div class="photos">
+        <label for="photo">Character's Color</label>
+        <select id="photo">
+          <option value="white">White</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+        </select>
+      </div>
+      <div class="backgrounds">
+        <label for="bg">Select Background</label>
+        <select id="bg">
+          <option value="Jupiter">Jupiter</option>
+          <option value="Mercury">Mercury</option>
+          <option value="Venus">Venus</option>
+        </select>
+      </div>
+      <button class="playNow">Press to continue</button>
     </section>
-    <section class="gamePage">
-      <div class="gridContainer">
-        <div class="x1y1 box"></div>
-        <div class="x1y2 box"></div>
-        <div class="x1y3 box"></div>
-        <div class="x1y4 box"></div>
-        <div class="x1y5 box"></div>
+    <div class="gamePage">
+      <div class="game">
+        <div class="gridContainer">
+          <div class="x1y1 box"></div>
+          <div class="x1y2 box"></div>
+          <div class="x1y3 box"></div>
+          <div class="x1y4 box"></div>
+          <div class="x1y5 box"></div>
 
-        <div class="x2y1 box"></div>
-        <div class="x2y2 box"></div>
-        <div class="x2y3 box"></div>
-        <div class="x2y4 box"></div>
-        <div class="x2y5 box"></div>
+          <div class="x2y1 box"></div>
+          <div class="x2y2 box"></div>
+          <div class="x2y3 box"></div>
+          <div class="x2y4 box"></div>
+          <div class="x2y5 box"></div>
 
-        <div class="x3y1 box"></div>
-        <div class="x3y2 box"></div>
-        <div class="x3y3 box"></div>
-        <div class="x3y4 box"></div>
-        <div class="x3y5 box"></div>
+          <div class="x3y1 box"></div>
+          <div class="x3y2 box"></div>
+          <div class="x3y3 box"></div>
+          <div class="x3y4 box"></div>
+          <div class="x3y5 box"></div>
 
-        <div class="x4y1 box"></div>
-        <div class="x4y2 box"></div>
-        <div class="x4y3 box"></div>
-        <div class="x4y4 box"></div>
-        <div class="x4y5 box"></div>
+          <div class="x4y1 box"></div>
+          <div class="x4y2 box"></div>
+          <div class="x4y3 box"></div>
+          <div class="x4y4 box"></div>
+          <div class="x4y5 box"></div>
 
-        <div class="x5y1 box"></div>
-        <div class="x5y2 box"></div>
-        <div class="x5y3 box"></div>
-        <div class="x5y4 box"></div>
-        <div class="x5y5 box"></div>
-      </div>
+          <div class="x5y1 box"></div>
+          <div class="x5y2 box"></div>
+          <div class="x5y3 box"></div>
+          <div class="x5y4 box"></div>
+          <div class="x5y5 box"></div>
+        </div>
 
-      <div class="scores">
-        <ul class="userScores"></ul>
-      </div>
-      <h1 class="timer">10</h1>
-      <div class="controls">
-        <img src="./img/up.png" class="moveUp" alt="" />
-        <div class="low">
-          <img src="./img/left.png" class="moveLeft" alt="" />
-          <img src="./img/down.png" class="moveDown" alt="" />
-          <img src="./img/right.png" class="moveRight" alt="" />
+        <div class="scores">
+          <ul class="userScores"></ul>
+        </div>
+        <h1 class="timer">10</h1>
+        <div class="controls">
+          <h2 class="playerType"></h2>
+          <img src="./img/up.png" class="moveUp" alt="" />
+          <div class="low">
+            <img src="./img/left.png" class="moveLeft" alt="" />
+            <img src="./img/down.png" class="moveDown" alt="" />
+            <img src="./img/right.png" class="moveRight" alt="" />
+            <button class="extendTimer">Extend Timer</button>
+            <button class="breakObstacle">Break Obstacle</button>
+          </div>
+        </div>
+        <div class="gameOver">
+          <button class="endGame">Quit!</button>
+          <button class="nextRound">Next Round!</button>
         </div>
       </div>
-      <div class="gameOver">
-        <button class="nextRound">Next Round!</button>
+      <div class="chat">
+        <div style="text-align: center;">Chat</div>
+          <div class="messages" id="messages"></div>
+            <form>
+              <input type="text" id="m" autocomplete="off">
+              <input type="submit" class="btn" value="Send"></input>
+            </form>
+          </div>
       </div>
-    </section>
+    </div>
+    
+    <audio class="theme-music" loop="true" src="./sounds/theme-music.mp3" autostart></embed>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"
       integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ=="
@@ -120,5 +164,23 @@
     ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $('#messages').empty();
+            $(function () {
+            var socket = io($('#messages'));
+            console.log()
+            $('form').submit(function(e) {
+                 // e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+            socket.on('chat message', function(msg){
+                $('#messages').append($('<p>').text("" + msg));
+            });
+        });
+        </script>
+
   </body>
 </html>

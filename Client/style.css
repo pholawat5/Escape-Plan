@@ -2,77 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Rationale", sans-serif;
 }
 
-html {
-  color: white;
-}
-
-body {
-  height: 100vh;
-  overflow: hidden;
-}
 /* Login Page */
 
-#rocket {
-  position: absolute;
-  z-index: 0;
-}
-
-#rocket2 {
-  position: absolute;
-  z-index: 0;
-  display: none;
-}
-
 .login {
-  overflow-x: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   background: url("./img/Login.png");
+  overflow: hidden;
   background-size: cover;
-  font-family: "Rationale", sans-serif;
 }
 
-.displayNameForm {
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #f7bf00;
-  font-size: 2.5rem;
-  text-shadow: 0px 3px #f7bd0059;
-}
-
-textarea:focus,
-input:focus {
-  outline: none;
-}
-
-.displayNameForm input {
-  font-size: 2rem;
-  padding: 1rem 2rem 1rem 2rem;
-  border-radius: 5px;
-}
-
-.nameWarning {
-  display: none;
-}
-
-.nameWarning.active {
-  display: block;
-}
-.roomWarning {
-  display: none;
-}
-
-.roomWarning.active {
-  display: block;
-}
 .login h1 {
   margin: 2rem 0rem;
   font-size: 6rem;
@@ -86,12 +32,16 @@ input:focus {
   padding: 1rem 2rem;
   color: #fbfdff;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Rationale", sans-serif;
   font-size: 2rem;
   border: none;
   background: #f7bf00;
   box-shadow: 0px 4px 4px #f69100;
   border-radius: 13px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
 }
 
 #stars2 {
@@ -222,7 +172,69 @@ input:focus {
   }
 }
 
-/*  */
+#rocket {
+  position: absolute;
+  bottom: 0;
+  left: -15%;
+}
+
+.displayNameForm {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f7bf00;
+  font-size: 2.5rem;
+  text-shadow: 0px 3px #f7bd0059;
+}
+
+.displayNameForm input {
+  font-size: 2rem;
+  padding: 1rem 2rem 1rem 2rem;
+  border-radius: 5px;
+}
+
+.nameWarning {
+  display: none;
+}
+
+.nameWarning.active {
+  display: block;
+}
+
+/* Game Instructions */
+
+.gameInstructions {
+  background-color: #1e2952;
+  color: white;
+  min-height: 100vh;
+  overflow-y: hidden;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10rem;
+}
+
+.instructions p {
+  margin: 1rem 0rem;
+}
+
+#rocket2 {
+  position: absolute;
+  bottom: 0;
+  left: -15%;
+}
+
+/* Room Creation */
+
 .roomCreation {
   min-height: 100vh;
   display: none;
@@ -232,8 +244,8 @@ input:focus {
   background: url("./img/Login.png");
   background-size: cover;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
-
 .joinGame {
   z-index: 1;
   display: flex;
@@ -265,18 +277,39 @@ input:focus {
   border-radius: 13px;
 }
 
-/*  */
+.random {
+  margin-bottom: 10rem;
+  padding: 1rem 2rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 2rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 13px;
+}
+
+.roomWarning {
+  display: none;
+}
+
+.roomWarning.active {
+  display: block;
+}
+
+/* Waiting Room */
 
 .waitingRoom {
-  overflow: hidden;
   min-height: 100vh;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Rationale", sans-serif;
   background: url("./img/user.png");
   background-size: cover;
+  overflow: hidden;
+  color: white;
 }
 
 .userList {
@@ -289,6 +322,7 @@ input:focus {
 .waitingRoom p {
   font-size: 2.5rem;
 }
+
 .waitingRoom button {
   margin: 2rem 0rem;
   padding: 1rem 2rem;
@@ -302,8 +336,69 @@ input:focus {
   border-radius: 13px;
 }
 
+.photos {
+  width: 30%;
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photos select {
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 8px;
+}
+
+.backgrounds {
+  width: 30%;
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backgrounds select {
+  margin: 2rem 0rem;
+  padding: 1rem 2rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 8px;
+}
+
 .waitingRoom ul {
   list-style: none;
+  height: 15vh;
 }
 
 .waitingRoom li {
@@ -311,13 +406,83 @@ input:focus {
   font-size: 2rem;
 }
 
+.waitingRoom option {
+  border: 2rem solid black;
+  align-items: center;
+  background-color: white;
+}
+/* gamePage */
+
 .gamePage {
-  min-height: 100vh;
+  padding-top: 1rem;
   display: none;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #1e2952;
+  font-family: "Rationale", sans-serif;
+  color: #f7bf00;
+  font-size: 1.5rem;
+}
+
+.game {
+  flex: 2 2 40rem;
+}
+
+.chat {
+  flex: 1 1 5rem;
+  background-color:transparent white;
+}
+
+.messages {
+  background: #4E4747;
+  mix-blend-mode: lighten;
+  border-radius: 5px;
+  width: 90%;
+  height: 50%;
+  margin: 5% auto 5% auto;
+  border: 1px solid;
+  border-color: #f4f4f4;
+  overflow-y: scroll;
+}
+
+.chat-controls {
+  width: 80%;
+  margin: 0 auto 0 auto;
+}
+
+#m {
+  width: 80%;
+}
+
+.messages li {
+  text-emphasis-color: white;
+  width: 100%;
+  height: 4%;
+  margin: auto auto 1px auto;font-family: "Rationale", sans-serif;
+  padding-left: 1px;
+  color: #f7a100;
+  font-size: 1rem;
+}
+
+.btn {
+  background: #f7a100;
+  height: 30px;
+  width: 15%;
+  color: white;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background: #f7a100;
+}
+
+.game {
+  min-height: 100vh;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: cornflowerblue;
+  /* background: url("./img/Mercury.jpg"); */
 }
 
 .gridContainer {
@@ -332,6 +497,7 @@ input:focus {
   height: 10vh;
   margin: 0.1rem;
   background-color: black;
+  opacity: 0.9;
   color: white;
   display: flex;
   justify-content: center;
@@ -345,18 +511,10 @@ input:focus {
   z-index: 1;
 }
 
-.currentBlock #Vector {
-  fill: red;
-}
-
 .otherPlayerBlock {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.otherPlayerBlock #Vector {
-  fill: blue;
 }
 
 .controls {
@@ -368,8 +526,40 @@ input:focus {
   opacity: 0;
 }
 
+.controls button {
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1.5rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 10px;
+  position: absolute;
+  left: 60%;
+  right: 20%;
+  top: 60%;
+  bottom: 35%;
+}
+
+.controls .breakObstacle {
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Rationale", sans-serif;
+  font-size: 1.5rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 10px;
+  position: absolute;
+  left: 60%;
+  right: 20%;
+  top: 70%;
+  bottom: 25%;
+}
+
 .nextRound {
-  opacity: 0;
+  opacity: 1;
 }
 
 .scores {
@@ -381,22 +571,15 @@ input:focus {
   opacity: 0;
 }
 
-/* */
-.gameInstructions {
-  overflow: hidden;
-  background-color: #1e2952;
-  display: none;
-  min-height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.gameOver button {
+  margin: 1rem 0rem;
+  padding: 1rem 1rem;
+  color: #fbfdff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: "Rationale", sans-serif;
-}
-
-.gameInstructions p {
-  margin-top: 2rem;
-}
-
-.instructions {
-  margin-top: 1rem;
+  font-size: 1.5rem;
+  border: none;
+  background: #f7bf00;
+  box-shadow: 0px 4px 4px #f69100;
+  border-radius: 10px;
 }
